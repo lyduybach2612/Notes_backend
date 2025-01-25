@@ -1,5 +1,6 @@
 package com.bach.notes.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,9 +24,11 @@ public class Note {
     String title;
     String content;
     @CreationTimestamp
-    LocalDateTime created_at;
+    @Column(name = "created_at")
+    LocalDateTime createdAt;
     @UpdateTimestamp
-    LocalDateTime updated_at;
+    @Column(name = "updated_at")
+    LocalDateTime updatedAt;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     User user;

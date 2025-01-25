@@ -1,6 +1,8 @@
 package com.bach.notes.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -9,7 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -30,10 +32,13 @@ public class User {
     String username;
     String password;
     @CreationTimestamp
-    LocalDateTime created_at;
+    @Column(name = "created_at")
+    LocalDateTime createdAt;
     @UpdateTimestamp
-    LocalDateTime updated_at;
+    @Column(name = "updated_at")
+    LocalDateTime updatedAt;
     @OneToMany(mappedBy = "user")
-    ArrayList<Note> notes;
+    @JsonIgnore
+    List<Note> notes;
 
 }
