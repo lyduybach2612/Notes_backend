@@ -1,9 +1,8 @@
 package com.bach.notes.services;
 
-import com.bach.notes.dtos.requests.NoteCreationRequest;
-import com.bach.notes.dtos.requests.NoteUpdateRequest;
+import com.bach.notes.dtos.requests.notes.NoteCreationRequest;
+import com.bach.notes.dtos.requests.notes.NoteUpdateRequest;
 import com.bach.notes.dtos.responses.notes.NoteResponse;
-import com.bach.notes.models.Note;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

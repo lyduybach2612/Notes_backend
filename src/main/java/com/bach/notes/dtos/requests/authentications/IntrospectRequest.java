@@ -1,4 +1,4 @@
-package com.bach.notes.dtos.responses.users;
+package com.bach.notes.dtos.requests.authentications;
 
 
 import lombok.AccessLevel;
@@ -11,12 +11,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserResponse {
+public class IntrospectRequest {
 
-    String firstname;
-    String lastname;
-    String email;
-    String username;
-    String password;
+    String token;
 
 }

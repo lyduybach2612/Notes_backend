@@ -29,6 +29,7 @@ public class User {
     String lastname;
     @Column(unique=true)
     String email;
+    @Column(unique=true)
     String username;
     String password;
     @CreationTimestamp

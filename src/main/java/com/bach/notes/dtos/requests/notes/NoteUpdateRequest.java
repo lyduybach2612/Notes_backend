@@ -1,4 +1,5 @@
-package com.bach.notes.dtos.requests;
+package com.bach.notes.dtos.requests.notes;
+
 
 import com.bach.notes.models.User;
 import jakarta.validation.constraints.NotEmpty;
@@ -12,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NoteCreationRequest {
+public class NoteUpdateRequest {
 
     @NotEmpty(message = "NOT_EMPTY_VALIDATION")
     String title;

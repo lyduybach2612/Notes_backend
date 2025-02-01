@@ -1,7 +1,7 @@
 package com.bach.notes.services.impl;
 
-import com.bach.notes.dtos.requests.NoteCreationRequest;
-import com.bach.notes.dtos.requests.NoteUpdateRequest;
+import com.bach.notes.dtos.requests.notes.NoteCreationRequest;
+import com.bach.notes.dtos.requests.notes.NoteUpdateRequest;
 import com.bach.notes.dtos.responses.notes.NoteResponse;
 import com.bach.notes.exceptions.AppException;
 import com.bach.notes.exceptions.ErrorCode;
@@ -15,11 +15,8 @@ import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
