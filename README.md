@@ -1,11 +1,11 @@
 # Notes Backend
 
 ## Giới thiệu
-Notes Backend là hệ thống Backend của ứng dụng Notes
-Ứng dụng được xây dựng dựa trên RESTfulAPI.
-Ứng dụng được tích hợp Security với JWT.
-Ứng dụng sử dụng Method Authorization.
-Ứng dụng bao gồm các chức năng đăng nhập, đăng kí, sửa thông tin cho người dùng cùng với các chức năng CRUD liên quan tới ghi chú.
+- Notes Backend là hệ thống Backend của ứng dụng Notes.
+- Ứng dụng được xây dựng dựa trên RESTfulAPI.
+- Ứng dụng được tích hợp Security với JWT.
+- Ứng dụng sử dụng Method Authorization.
+- Ứng dụng bao gồm các chức năng đăng nhập, đăng kí, sửa thông tin cho người dùng cùng với các chức năng CRUD liên quan tới ghi chú.
 
 ## Chức năng
 - Hệ thống cung cấp các chức năng đăng nhập, đăng kí cho phép người dùng sử dụng ứng dụng. Sau khi đăng nhập sẽ trả về một JWT.
