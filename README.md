@@ -6,6 +6,7 @@
 - Ứng dụng được tích hợp Security với JWT.
 - Ứng dụng sử dụng Method Authorization.
 - Ứng dụng bao gồm các chức năng đăng nhập, đăng kí, sửa thông tin cho người dùng cùng với các chức năng CRUD liên quan tới ghi chú.
+- Ứng dụng sử dụng Swagger để kiểm thử API và tạo API documentation.
 
 ## Chức năng
 - Hệ thống cung cấp các chức năng đăng nhập, đăng kí cho phép người dùng sử dụng ứng dụng. Sau khi đăng nhập sẽ trả về một JWT.
@@ -16,5 +17,5 @@
 - MySQL
 
 ## Công nghệ sử dụng
-- Spring Boot, Spring Security x JWT, RESTfulAPI
+- Spring Boot, Spring Security x JWT, RESTfulAPI, Swagger, Mapstruct
 
