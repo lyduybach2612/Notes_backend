@@ -50,7 +50,7 @@ public class AuthService implements IAuthService {
         if(!authResponse.isAuthenticated()){
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
-        authResponse.setToken(generateToken(user.getId()));
+        authResponse.setToken(generateToken(user));
         return authResponse;
 
     }
@@ -69,14 +69,14 @@ public class AuthService implements IAuthService {
 
     }
 
-    private String generateToken(Long userId) {
+    private String generateToken(User user) {
 
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
         JWTClaimsSet claims = new JWTClaimsSet.Builder()
+                .subject(user.getUsername())
                 .issuer("bachly")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
-                .claim("userId", userId)
                 .build();
         Payload payload = new Payload(claims.toJSONObject());
         JWSObject jwsObject = new JWSObject(header, payload);

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NoteRepository extends JpaRepository<Note, Long> {
 
-    Page<Note> findAllByTitleContaining(String title, Pageable pageable);
+    Page<Note> findAllByUserIdAndTitleContaining(Long user_id, String title, Pageable pageable);
+    Page<Note> findAllByUserId(Long user_id, Pageable pageable);
 
 }

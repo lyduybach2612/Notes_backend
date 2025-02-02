@@ -17,6 +17,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,14 +35,20 @@ public class NoteService implements INoteService {
     @Override
     public Page<NoteResponse> getNotes(Pageable pageable) {
 
-        Page<Note> notes = noteRepository.findAll(pageable);
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        Page<Note> notes = noteRepository.findAllByUserId(user.getId(), pageable);
         return notes.map(noteMapper::toNoteResponse);
 
     }
 
     @Override
+    @PostAuthorize("returnObject.getUser().username == authentication.name")
     public NoteResponse getNote(Long id) {
         Note note = noteRepository.findById(id).orElseThrow(() ->new AppException(ErrorCode.NOTE_NOT_FOUND));
+        if (!note.getUser().getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            throw new AppException(ErrorCode.NOTE_NOT_BELONG);
+        }
         return noteMapper.toNoteResponse(note);
     }
 
@@ -46,7 +56,8 @@ public class NoteService implements INoteService {
     @Transactional
     public NoteResponse createNote(NoteCreationRequest request) {
 
-        User user = userRepository.findById(1L).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() ->new AppException(ErrorCode.USER_NOT_FOUND));
         request.setUser(user);
         Note note = noteRepository.save(noteMapper.toNote(request));
         return noteMapper.toNoteResponse(note);
@@ -54,6 +65,7 @@ public class NoteService implements INoteService {
     }
 
     @Override
+    @PreAuthorize("@noteRepository.findById(#id).get().getUser().getUsername() == authentication.name")
     public void deleteNote(Long id) {
 
         Note note = noteRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOTE_NOT_FOUND));
@@ -64,15 +76,19 @@ public class NoteService implements INoteService {
     @Override
     public Page<NoteResponse> getNotesByTitle(String title, Pageable pageable) {
 
-        Page<Note> notes = noteRepository.findAllByTitleContaining(title, pageable);
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() ->new AppException(ErrorCode.USER_NOT_FOUND));
+        Page<Note> notes = noteRepository.findAllByUserIdAndTitleContaining(user.getId(), title, pageable);
         return notes.map(noteMapper::toNoteResponse);
 
     }
 
     @Override
+    @PostAuthorize("returnObject.getUser().username == authentication.name")
     public NoteResponse updateNote(Long id, NoteUpdateRequest request) {
 
-        User user = userRepository.findById(1L).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         Note note = noteRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOTE_NOT_FOUND));
         request.setUser(user);
         noteMapper.updateNote(request, note);

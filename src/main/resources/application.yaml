@@ -12,6 +12,11 @@ spring:
     user:
       name: user
       password: bach2612
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
 
 jwt:
   signerKey: "b/xo9SjUrYj8ewuy9cybMB1Rrw+MkNwuZkYIwr6/sK4FltjjPdxzZlYAMD40UPsD"
