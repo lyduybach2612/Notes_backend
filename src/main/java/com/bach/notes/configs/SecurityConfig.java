@@ -3,6 +3,7 @@ package com.bach.notes.configs;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,12 +27,16 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    @Autowired
+    CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
     private final String[] PERMIT_ALL = {
             "/users",
             "/auth/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            "/logout",
     };
 
     @Value("${jwt.signerKey}")
@@ -44,6 +49,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers(PERMIT_ALL).permitAll()
                         .anyRequest().authenticated());
+
+        http.exceptionHandling(exception -> exception.authenticationEntryPoint(customAuthenticationEntryPoint));
+
         http.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer ->
                         jwtConfigurer
@@ -51,6 +59,11 @@ public class SecurityConfig {
                                 .jwtAuthenticationConverter(jwtConverter())));
         return  http.build();
 
+    }
+
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        return new CustomJwtDecoder();
     }
 
     @Bean
@@ -63,13 +76,5 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    JwtDecoder jwtDecoder() {
-        SecretKeySpec secret = new SecretKeySpec(signerKey.getBytes(), "HS512");
-        return NimbusJwtDecoder
-                .withSecretKey(secret)
-                .macAlgorithm(MacAlgorithm.HS512)
-                .build();
-    }
 
 }

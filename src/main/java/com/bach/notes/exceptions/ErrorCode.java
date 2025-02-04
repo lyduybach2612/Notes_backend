@@ -17,6 +17,7 @@ public enum ErrorCode {
     USERNAME_ALREADY_EXISTS(1006,"Username Already Exists", HttpStatus.BAD_REQUEST),
     INVALID_EMAIL(1007,"Invalid Email", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(1008,"Unauthenticated", HttpStatus.UNAUTHORIZED),
+    UNAUTHORIZED(1009,"Unauthorized", HttpStatus.UNAUTHORIZED),
     NOTE_NOT_BELONG(1009,"You don't have this note", HttpStatus.BAD_REQUEST),
     ;
     int code;

@@ -3,6 +3,7 @@ package com.bach.notes.controllers;
 
 import com.bach.notes.dtos.requests.authentications.AuthRequest;
 import com.bach.notes.dtos.requests.authentications.IntrospectRequest;
+import com.bach.notes.dtos.requests.invalidate_tokens.LogoutRequest;
 import com.bach.notes.dtos.responses.ApiResponse;
 import com.bach.notes.dtos.responses.authentications.AuthResponse;
 import com.bach.notes.dtos.responses.authentications.IntrospectResponse;
@@ -43,6 +44,17 @@ public class AuthController {
         return ApiResponse.<IntrospectResponse>builder()
                 .code(1000)
                 .result(authService.introspect(authRequest))
+                .build();
+
+    }
+
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(LogoutRequest authRequest) throws ParseException, JOSEException {
+
+        authService.logout(authRequest);
+        return ApiResponse.<Void>builder()
+                .code(1000)
+                .message("Logout successfully")
                 .build();
 
     }
