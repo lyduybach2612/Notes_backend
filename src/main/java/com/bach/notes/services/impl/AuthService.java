@@ -49,7 +49,7 @@ public class AuthService implements IAuthService {
     @Override
     public AuthResponse authenticate(AuthRequest authRequest) {
 
-        User user = userRepository.findByUsername(authRequest.getUsername()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        User user = userRepository.findByUsername(authRequest.getUsername()).orElseThrow(() -> new AppException(ErrorCode.UNAUTHENTICATED));
         AuthResponse authResponse = new AuthResponse();
         authResponse.setAuthenticated(passwordEncoder.matches(authRequest.getPassword(), user.getPassword()));
         if(!authResponse.isAuthenticated()){

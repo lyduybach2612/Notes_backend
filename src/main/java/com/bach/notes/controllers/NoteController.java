@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @RequestMapping("api/notes")
@@ -42,6 +43,7 @@ public class NoteController {
                 .build();
 
     }
+
 
     @GetMapping("/{noteId}")
     public ApiResponse<NoteResponse> getNoteById(@PathVariable Long noteId) {

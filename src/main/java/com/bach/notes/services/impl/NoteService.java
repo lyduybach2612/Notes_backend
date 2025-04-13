@@ -67,7 +67,6 @@ public class NoteService implements INoteService {
     @Override
     @PreAuthorize("@noteRepository.findById(#id).get().getUser().getUsername() == authentication.name")
     public void deleteNote(Long id) {
-
         Note note = noteRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOTE_NOT_FOUND));
         noteRepository.delete(note);
 

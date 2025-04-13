@@ -1,0 +1,21 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/my_notes?allowPublicKeyRetrieval=true&autoReconnect=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=bach2612
+  db:
+    image: mysql:8.0.36-debian
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: bach2612
+      MYSQL_DATABASE: my_notes
+    volumes:
+      - /var/lib/mysql
+    ports:
+      - "3306:3306"

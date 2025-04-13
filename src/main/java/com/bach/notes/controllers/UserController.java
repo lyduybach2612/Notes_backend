@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
-@RequestMapping("users")
+@RequestMapping("api/users")
 public class UserController {
 
     UserService userService;

@@ -9,14 +9,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NoteResponse {
 
+    Long id;
     String title;
     String content;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
     User user;
 
 }

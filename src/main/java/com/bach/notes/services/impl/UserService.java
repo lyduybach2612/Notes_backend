@@ -15,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
@@ -27,13 +29,13 @@ public class UserService implements IUserService {
     @Override
     public UserResponse createUser(UserCreationRequest request) {
 
-        User existingEmail = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
-        if (existingEmail != null) {
+        Optional<User> existingEmail = userRepository.findByEmail(request.getEmail());
+        if (existingEmail.isPresent()) {
             throw new AppException(ErrorCode.EMAIL_ALREADY_EXISTS);
         }
 
-        User existingUsername = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
-        if (existingUsername != null) {
+        Optional<User> existingUsername = userRepository.findByUsername(request.getUsername());
+        if (existingUsername.isPresent()) {
             throw new AppException(ErrorCode.USERNAME_ALREADY_EXISTS);
         }
 
